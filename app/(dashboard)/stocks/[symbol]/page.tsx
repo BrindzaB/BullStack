@@ -12,7 +12,7 @@ export default function StockPage({params}: PageProps) {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-stone-800">{symbol}</h1>
+                <h1 className="text-display-sm text-surface-900">{symbol}</h1>
                 <AddToWatchlistButton symbol={symbol}/>
             </div>
             <StockQuoteCard symbol={symbol}/>

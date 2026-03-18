@@ -6,8 +6,8 @@ export async function TopBar() {
     const session = await auth()
 
     return (
-        <header className="h-14 border-b border-gray-200 bg-white flex items-center justify-between px-6">
-            <span className="font-bold text-stone-800">BullStack</span>
+        <header className="sticky top-0 z-40 h-14 border-b border-surface-200 bg-white/95 backdrop-blur-sm shadow-topbar flex items-center justify-between px-6">
+            <span className="logo-mark">BullStack</span>
             <StockSearchBar />
             {session && <UserMenu session={session} />}
         </header>

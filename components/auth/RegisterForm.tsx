@@ -10,7 +10,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="w-full bg-gray-900 hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+      className="btn-primary w-full"
     >
       {pending ? "Creating account..." : "Create account"}
     </button>
@@ -21,13 +21,13 @@ export function RegisterForm() {
   const [state, formAction] = useFormState(registerAction, null)
 
   return (
-    <div className="bg-white rounded-2xl p-8 w-full max-w-md border border-gray-200">
-      <h1 className="text-2xl font-bold text-stone-800 mb-2">Create an account</h1>
-      <p className="text-stone-500 mb-6">Start tracking your portfolio today</p>
+    <div className="card w-full max-w-md p-8">
+      <h1 className="text-display-sm text-surface-900">Create an account</h1>
+      <p className="mt-1 text-sm text-surface-500">Start tracking your portfolio today</p>
 
-      <form action={formAction} className="space-y-4">
+      <form action={formAction} className="mt-6 space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-surface-700 mb-1">
             Name
           </label>
           <input
@@ -36,15 +36,15 @@ export function RegisterForm() {
             type="text"
             required
             autoComplete="name"
-            className="w-full bg-stone-50 border border-stone-300 text-stone-900 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+            className="input-base"
           />
           {state?.errors?.name && (
-            <p className="text-red-500 text-sm mt-1">{state.errors.name[0]}</p>
+            <p className="text-xs text-down mt-1">{state.errors.name[0]}</p>
           )}
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-surface-700 mb-1">
             Email
           </label>
           <input
@@ -53,15 +53,15 @@ export function RegisterForm() {
             type="email"
             required
             autoComplete="email"
-            className="w-full bg-stone-50 border border-stone-300 text-stone-900 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+            className="input-base"
           />
           {state?.errors?.email && (
-            <p className="text-red-500 text-sm mt-1">{state.errors.email[0]}</p>
+            <p className="text-xs text-down mt-1">{state.errors.email[0]}</p>
           )}
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="password" className="block text-sm font-medium text-surface-700 mb-1">
             Password
           </label>
           <input
@@ -70,19 +70,19 @@ export function RegisterForm() {
             type="password"
             required
             autoComplete="new-password"
-            className="w-full bg-stone-50 border border-stone-300 text-stone-900 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+            className="input-base"
           />
           {state?.errors?.password && (
-            <p className="text-red-500 text-sm mt-1">{state.errors.password[0]}</p>
+            <p className="text-xs text-down mt-1">{state.errors.password[0]}</p>
           )}
         </div>
 
         <SubmitButton />
       </form>
 
-      <p className="mt-6 text-center text-stone-500 text-sm">
+      <p className="mt-6 text-center text-xs text-surface-500">
         Already have an account?{" "}
-        <Link href="/login" className="text-gray-900 hover:text-gray-700 font-medium underline underline-offset-2">
+        <Link href="/login" className="font-medium text-surface-900 hover:text-surface-700 underline underline-offset-2">
           Sign in
         </Link>
       </p>

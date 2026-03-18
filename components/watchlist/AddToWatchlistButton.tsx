@@ -17,8 +17,20 @@ export default function AddToWatchlistButton({symbol}: {symbol: string}) {
     }
 
     return (
-        <button onClick={handleClick}>
-            <Star fill={isInWatchlist ? "currentColor" : "none"}/>
+        <button
+            onClick={handleClick}
+            className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-all
+                ${isInWatchlist
+                    ? "border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100"
+                    : "border-surface-300 bg-white text-surface-600 hover:border-surface-400 hover:bg-surface-50"
+                }`}
+        >
+            <Star
+                size={14}
+                className={isInWatchlist ? "text-brand-500" : "text-surface-400"}
+                fill={isInWatchlist ? "currentColor" : "none"}
+            />
+            {isInWatchlist ? "Watching" : "Watch"}
         </button>
     )
 }

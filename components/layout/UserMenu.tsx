@@ -9,11 +9,11 @@ interface Props {
 
 export function UserMenu({ session }: Props) {
     return (
-        <div className="flex items-center gap-3">
-            <span className="text-sm text-stone-600">{session.user?.email}</span>
+        <div className="flex items-center gap-4">
+            <span className="hidden text-xs text-surface-500 sm:block">{session.user?.email}</span>
             <button
                 onClick={() => signOut({ callbackUrl: "/login"})}
-                className="text-sm font-medium text-gray-900 underline underline-offset-2 hover:text-gray-700"
+                className="text-xs font-medium text-surface-600 transition-colors hover:text-surface-900"
             >
                 Sign out
             </button>

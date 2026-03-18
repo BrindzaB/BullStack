@@ -1,36 +1,159 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BullStack
+
+A personal finance dashboard for tracking stock watchlists and portfolios — built as a learning project with a full production-grade stack.
+
+![BullStack Dashboard Preview](./public/stock.png)
+
+
+---
+
+## Tech Stack
+
+[![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-v3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Railway-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://railway.app/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![NextAuth.js](https://img.shields.io/badge/NextAuth.js-v5-7C3AED?style=flat-square&logo=auth0&logoColor=white)](https://authjs.dev/)
+[![Finnhub](https://img.shields.io/badge/Finnhub-Stock%20Data-FF6B35?style=flat-square&logo=yahoo&logoColor=white)](https://finnhub.io/)
+[![Recharts](https://img.shields.io/badge/Recharts-Charts-22C55E?style=flat-square&logo=chartdotjs&logoColor=white)](https://recharts.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack%20Query-v5-FF4154?style=flat-square&logo=reactquery&logoColor=white)](https://tanstack.com/query)
+[![Zod](https://img.shields.io/badge/Zod-Validation-3E67B1?style=flat-square&logo=zod&logoColor=white)](https://zod.dev/)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
+
+---
+
+## Project Structure
+
+```
+bullstack/
+├── app/
+│   ├── (auth)/                    # Centered card layout — login, register
+│   ├── (dashboard)/               # Protected pages — topbar layout
+│   │   ├── dashboard/             # Overview: watchlist widget
+│   │   ├── watchlist/             # Full watchlist with live quotes
+│   │   ├── stocks/[symbol]/       # Chart, quote card, add to watchlist
+│   │   ├── portfolio/             # Holdings table with P&L  [upcoming]
+│   │   └── news/                  # Market news feed          [upcoming]
+│   └── api/
+│       ├── auth/[...nextauth]/
+│       ├── watchlist/             # GET, POST; [symbol]/ DELETE
+│       ├── portfolio/             # GET, POST; [id]/ PUT, DELETE [upcoming]
+│       └── stocks/[symbol]/       # quote/, candles/, search/
+├── components/
+│   ├── auth/                      # LoginForm, RegisterForm
+│   ├── stock/                     # StockSearchBar, StockQuoteCard, StockChart
+│   ├── watchlist/                 # WatchlistTable, WatchlistWidget, AddToWatchlistButton
+│   └── layout/                   # Topbar, UserMenu
+├── lib/
+│   ├── auth.ts                    # NextAuth v5 config
+│   ├── prisma.ts                  # Prisma singleton (globalThis pattern)
+│   ├── finnhub.ts                 # Finnhub API wrapper with in-memory cache
+│   ├── yahoo.ts                   # yahoo-finance2 candles, normalized to Finnhub shape
+│   ├── cache.ts                   # Map-based TTL cache utility
+│   ├── api.ts                     # Client-side fetch wrappers
+│   └── utils.ts                   # cn(), formatCurrency(), formatPercent()
+├── hooks/
+│   └── useWatchlist.ts            # React Query hook for watchlist CRUD
+├── types/
+│   ├── finnhub.ts
+│   └── next-auth.d.ts
+├── prisma/schema.prisma
+└── middleware.ts                  # Route protection
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+
+- A PostgreSQL database (Railway recommended)
+- Finnhub API key — [finnhub.io/dashboard](https://finnhub.io/dashboard)
+- Google OAuth credentials (optional, for Google sign-in)
+
+### Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```env
+DATABASE_URL=           # Railway PostgreSQL connection string
+NEXTAUTH_URL=           # http://localhost:3000
+NEXTAUTH_SECRET=        # openssl rand -base64 32
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+FINNHUB_API_KEY=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install and Run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+npx prisma migrate dev --name init
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Current Status
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Completed
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Phase 1 — Project Setup**
+Scaffolded with Next.js 14 App Router, connected to Railway PostgreSQL, deployed to Vercel.
 
-## Deploy on Vercel
+**Phase 2 — Authentication**
+Email/password registration with Zod validation and bcryptjs hashing. Google OAuth via NextAuth v5. Server Actions for auth forms (no API routes for auth). Middleware protects all `/dashboard/*` routes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Phase 3 — Stock Data**
+Live quotes via Finnhub (60s refresh). Historical candles via `yahoo-finance2` (normalized to Finnhub shape — Finnhub candles are premium-tier). Debounced symbol search autocomplete. Area chart with 1W / 1M / 3M / 1Y resolution switcher. All Finnhub calls are server-side only; the API key never reaches the browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Phase 4 — Watchlist**
+Users can add/remove stocks from a personal watchlist. Live quotes displayed in both a full table view and a dashboard widget. Mutations use optimistic updates via TanStack Query.
+
+**UI Polish**
+Custom design system applied — warm `surface-*` color palette, semantic `up`/`down` directional colors, `brand-*` amber accent. Monospace `tabular-nums` on all prices and stats. Sticky topbar with backdrop blur. `card`, `badge-up/down`, `btn-primary`, `input-base` utility classes throughout.
+
+---
+
+### Upcoming
+
+**Phase 5 — Portfolio Tracking**
+Holdings table (symbol, shares, avg cost, current price, value, P&L). `AddHoldingModal` with symbol picker. `PortfolioSummaryCard` with total value and return. Portfolio summary widget on dashboard.
+
+**Phase 6 — News Feed**
+Per-stock news on the stock detail page. General market headlines on dashboard and `/news`. 15-minute server-side cache.
+
+**Phase 7 — Production Polish**
+Loading skeletons, error boundaries, `<Suspense>` wrappers, mobile-responsive layout, end-to-end deploy validation.
+
+---
+
+## Architecture Notes
+
+**Caching** — All external API calls are server-side, cached in-memory with TTL:
+
+| Data | TTL |
+|---|---|
+| Quote | 60 s |
+| Candles (intraday/weekly) | 30 min |
+| Candles (monthly/yearly) | 6 h |
+| Company profile | 24 h |
+| Symbol search | 5 min |
+
+**Auth split** — `auth.config.ts` at the project root is Edge-safe (no Prisma) and used by `middleware.ts`. `lib/auth.ts` spreads that config and adds the Prisma adapter — only runs in Node.js runtime.
+
+**Prisma 7** — Uses `@prisma/adapter-pg` driver adapter. No `url` in `schema.prisma`; connection string is passed directly in `lib/prisma.ts`. `prisma.config.ts` holds the URL for CLI operations (migrations, studio).
+
+---
+
+## Key Rules
+
+1. Never expose `FINNHUB_API_KEY` to the browser — all stock API calls go through Next.js API routes.
+2. Use `Decimal` (not `Float`) in Prisma for all money/quantity fields.
+3. Every API route handler checks `session` independently — middleware alone is not sufficient.
+4. Always filter DB queries by `userId` on the server side.
+5. Any file importing Recharts must have `"use client"` at the top.

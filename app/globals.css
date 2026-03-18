@@ -1,27 +1,121 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind components;
+  @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+  /* ── CSS Variables ────────────────────────────────────────────── */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #eceae3;   /* surface-200 — the warm parchment base */
+    --foreground: #1f1d1a;   /* surface-900 — near-black for body text */
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  /* Dark mode intentionally removed — single warm light theme */
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-}
+
+  /* ── Component layer ──────────────────────────────────────────── */
+  @layer components {
+
+    /* Card: the universal container primitive.
+       Replaces the scattered `rounded-2xl border border-gray-200 bg-white` pattern. */
+    .card {
+      @apply rounded-2xl border border-surface-300 bg-white shadow-card;
+    }
+
+    /* Input: all text/email/password fields.
+       Focus ring uses amber brand color — the single accent touch. */
+    .input-base {
+      @apply w-full rounded-lg border border-surface-300 bg-surface-50
+             px-3 py-2 text-sm text-surface-900
+             placeholder:text-surface-400
+             focus:outline-none focus:ring-2 focus:ring-brand-700/30 focus:border-brand-700
+             transition-[border-color,box-shadow] duration-150;
+    }
+
+    /* Primary action button — dark fill, subtle hover lift */
+    .btn-primary {
+      @apply inline-flex items-center justify-center
+             rounded-lg bg-surface-900 text-white text-sm font-medium
+             px-4 py-2.5
+             transition-all duration-150
+             hover:bg-surface-800 hover:shadow-card-hover hover:-translate-y-px
+             active:translate-y-0 active:shadow-none
+             disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0;
+    }
+
+    /* Ghost button — outlined, for secondary actions (e.g. Continue with Google) */
+    .btn-ghost {
+      @apply inline-flex items-center justify-center
+             rounded-lg border border-surface-300 bg-white text-surface-800 text-sm font-medium
+             px-4 py-2.5
+             transition-all duration-150
+             hover:bg-surface-50 hover:border-surface-400
+             active:scale-[0.99]
+             disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    /* Up/Down badges — pill chips for price change display.
+       Always monospace + tabular-nums so digits don't jump. */
+    .badge-up {
+      @apply inline-flex items-center rounded-md
+             bg-up-bg text-up
+             px-1.5 py-0.5 text-xs font-medium
+             font-mono tabular-nums;
+    }
+
+    .badge-down {
+      @apply inline-flex items-center rounded-md
+             bg-down-bg text-down
+             px-1.5 py-0.5 text-xs font-medium
+             font-mono tabular-nums;
+    }
+
+    /* Section label: small uppercase category label above stats */
+    .section-label {
+      @apply text-xs font-medium uppercase tracking-wider text-surface-500;
+    }
+
+    /* Logo mark: the BullStack brand name in the topbar */
+    .logo-mark {
+      @apply text-base font-bold tracking-tight text-surface-900 select-none;
+    }
+  }
+
+  /* ── Utility layer ────────────────────────────────────────────── */
+  @layer utilities {
+
+    /* .num: apply to every price, percent, stat, and axis tick.
+       Biggest single quality signal — monospace digits don't reflow. */
+    .num {
+      @apply font-mono tabular-nums;
+    }
+
+    /* Semantic directional utilities — shortcuts so component code stays readable */
+    .text-up   { color: #15803d; }
+    .text-down { color: #b91c1c; }
+    .bg-up     { background-color: #dcfce7; }  /* light tint for badge bg */
+    .bg-down   { background-color: #fee2e2; }
+
+    /* text-balance */
+    .text-balance {
+      text-wrap: balance;
+    }
+
+    /* Shimmer skeleton loader — CSS only, no JS needed.
+       Usage: <div className="shimmer rounded-lg h-6 w-32" /> */
+    .shimmer {
+      background: linear-gradient(
+        90deg,
+        #f5f3ef 25%,
+        #eceae3 50%,
+        #f5f3ef 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.8s linear infinite;
+    }
+  }

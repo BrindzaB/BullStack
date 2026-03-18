@@ -44,36 +44,36 @@ export default function StockSearchBar() {
 
     return (
         <div ref={containerRef} className="relative w-64">
-        <input
-            type="text"
-            value={input}
-            onChange={(e) => {
-            setInput(e.target.value);
-            setOpen(true);
-            }}
-            placeholder="Search stocks..."
-            className="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-gray-900"
-        />
-        {open && debouncedQuery.length >= 1 && (
-            <ul className="absolute z-50 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-lg">
-            {isFetching && (
-                <li className="px-4 py-2 text-sm text-stone-500">Searching...</li>
+            <input
+                type="text"
+                value={input}
+                onChange={(e) => {
+                    setInput(e.target.value);
+                    setOpen(true);
+                }}
+                placeholder="Search stocks..."
+                className="input-base"
+            />
+            {open && debouncedQuery.length >= 1 && (
+                <ul className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-surface-200 bg-white shadow-dropdown animate-slide-down">
+                    {isFetching && (
+                        <li className="px-4 py-2.5 text-sm text-surface-500">Searching...</li>
+                    )}
+                    {!isFetching && results.length === 0 && (
+                        <li className="px-4 py-2.5 text-sm text-surface-500">No results</li>
+                    )}
+                    {results.map((item) => (
+                        <li
+                            key={item.symbol}
+                            onMouseDown={() => handleSelect(item.symbol)}
+                            className="flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-surface-50"
+                        >
+                            <span className="num font-semibold text-surface-900">{item.symbol}</span>
+                            <span className="ml-3 truncate text-xs text-surface-500">{item.description}</span>
+                        </li>
+                    ))}
+                </ul>
             )}
-            {!isFetching && results.length === 0 && (
-                <li className="px-4 py-2 text-sm text-stone-500">No results</li>
-            )}
-            {results.map((item) => (
-                <li
-                key={item.symbol}
-                onMouseDown={() => handleSelect(item.symbol)}
-                className="flex cursor-pointer items-center justify-between px-4 py-2 text-sm hover:bg-stone-50"
-                >
-                <span className="font-medium text-stone-800">{item.symbol}</span>
-                <span className="ml-2 truncate text-stone-500">{item.description}</span>
-                </li>
-            ))}
-            </ul>
-        )}
         </div>
     );
 }

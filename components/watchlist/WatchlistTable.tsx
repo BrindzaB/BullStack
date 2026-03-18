@@ -15,14 +15,35 @@ function WatchlistRow({ symbol, onRemove }: { symbol: string, onRemove: () => vo
     const isPositive = (data?.dp ?? 0) >= 0;
 
     return (
-        <tr>
-            <td>{symbol}</td>
-            <td>{data ? formatCurrency(data.c) : "-"}</td>
-            <td className={isPositive ? "text-green-600" : "text-red-500"}>
-                {data ? formatPercent(data.dp / 100): "-"}
+        <tr className="group border-b border-surface-100 transition-colors hover:bg-surface-50">
+            <td className="py-3.5 pl-6 pr-4">
+                <span className="num font-semibold text-surface-900">{symbol}</span>
             </td>
-            <td>
-                <button onClick={onRemove}>Remove</button>
+            <td className="py-3.5 px-4">
+                <span className="num text-sm text-surface-800">
+                    {data ? formatCurrency(data.c) : "—"}
+                </span>
+            </td>
+            <td className="py-3.5 px-4">
+                {data ? (
+                    <span className={isPositive ? "badge-up" : "badge-down"}>
+                        {isPositive ? "+" : ""}
+                        {formatPercent(data.dp / 100)}
+                    </span>
+                ) : (
+                    <span className="text-sm text-surface-400">—</span>
+                )}
+            </td>
+            <td className="py-3.5 pl-4 pr-6 text-right">
+                <button
+                    onClick={onRemove}
+                    className="rounded-md px-2 py-1 text-xs font-medium text-surface-500
+                               opacity-0 transition-all
+                               hover:bg-down-bg hover:text-down
+                               group-hover:opacity-100"
+                >
+                    Remove
+                </button>
             </td>
         </tr>
     )
@@ -33,35 +54,46 @@ export default function WatchlistTable() {
 
     if (isLoading) {
         return (
-            <div className="rounded-2xl border border-gray-200 bg-white p-8">
-                <p className="text-sm text-stone-500">Loading quote...</p>
+            <div className="card p-8">
+                <p className="text-sm text-surface-500">Loading watchlist...</p>
             </div>
         );
     }
 
     if (watchlist.length === 0) {
         return (
-            <div className="rounded-2xl border border-gray-200 bg-white p-8">
-                <p className="text-sm text-stone-500">Watchlist is currently empty.</p>
+            <div className="card p-8">
+                <p className="text-sm text-surface-500">Watchlist is currently empty.</p>
             </div>
         )
     }
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th><th>Price</th><th>Change</th><th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {watchlist.map((item) => (
-                    <WatchlistRow 
-                        key={item.symbol}
-                        symbol={item.symbol}
-                        onRemove={() => removeFromWatchlist(item.symbol)}/>
-                ))}
-            </tbody>
-        </table>
+        <div className="card overflow-hidden">
+            <table className="w-full text-sm">
+                <thead>
+                    <tr className="border-b border-surface-200 bg-surface-50">
+                        <th className="py-3 pl-6 pr-4 text-left">
+                            <span className="section-label">Symbol</span>
+                        </th>
+                        <th className="py-3 px-4 text-left">
+                            <span className="section-label">Price</span>
+                        </th>
+                        <th className="py-3 px-4 text-left">
+                            <span className="section-label">Change</span>
+                        </th>
+                        <th className="py-3 pl-4 pr-6" />
+                    </tr>
+                </thead>
+                <tbody>
+                    {watchlist.map((item) => (
+                        <WatchlistRow
+                            key={item.symbol}
+                            symbol={item.symbol}
+                            onRemove={() => removeFromWatchlist(item.symbol)}/>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     )
 }
