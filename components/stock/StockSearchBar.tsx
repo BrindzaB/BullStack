@@ -43,7 +43,7 @@ export default function StockSearchBar() {
     }
 
     return (
-        <div ref={containerRef} className="relative w-64">
+        <div ref={containerRef} className="relative w-96">
             <input
                 type="text"
                 value={input}

@@ -41,9 +41,9 @@ export default function StockChart({ symbol }: { symbol: string}) {
           <button
             key={r}
             onClick={() => setResolution(r)}
-            className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors ${
+            className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors focus:outline-none ${
               resolution === r
-                ? "bg-surface-900 text-white"
+                ? "bg-brand-500 text-white"
                 : "bg-surface-100 text-surface-600 hover:bg-surface-200"
             }`}
           >
@@ -69,8 +69,8 @@ export default function StockChart({ symbol }: { symbol: string}) {
           <AreaChart data={chartData}>
             <defs>
               <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#1f1d1a" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#1f1d1a" stopOpacity={0} />
+                <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.35} />
+                <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis
@@ -104,7 +104,7 @@ export default function StockChart({ symbol }: { symbol: string}) {
             <Area
               type="monotone"
               dataKey="price"
-              stroke="#1f1d1a"
+              stroke="#8b5cf6"
               strokeWidth={1.5}
               fill="url(#priceGradient)"
               dot={false}
