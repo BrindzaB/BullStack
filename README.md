@@ -2,7 +2,7 @@
 
 A personal finance dashboard for tracking stock watchlists and portfolios — built as a learning project with a full production-grade stack.
 
-![BullStack Dashboard Preview](./public/stock.png)
+![BullStack Portfolio Preview](./public/portfolio.png)
 
 
 ---
@@ -144,16 +144,9 @@ Loading skeletons, error boundaries, `<Suspense>` wrappers, mobile-responsive la
 | Company profile | 24 h |
 | Symbol search | 5 min |
 
-**Auth split** — `auth.config.ts` at the project root is Edge-safe (no Prisma) and used by `middleware.ts`. `lib/auth.ts` spreads that config and adds the Prisma adapter — only runs in Node.js runtime.
+## Additional screenshots
 
-**Prisma 7** — Uses `@prisma/adapter-pg` driver adapter. No `url` in `schema.prisma`; connection string is passed directly in `lib/prisma.ts`. `prisma.config.ts` holds the URL for CLI operations (migrations, studio).
 
----
+![BullStack Dashboard Preview](./public/dashboard.png)
+![BullStack Stock Preview](./public/stock.png)
 
-## Key Rules
-
-1. Never expose `FINNHUB_API_KEY` to the browser — all stock API calls go through Next.js API routes.
-2. Use `Decimal` (not `Float`) in Prisma for all money/quantity fields.
-3. Every API route handler checks `session` independently — middleware alone is not sufficient.
-4. Always filter DB queries by `userId` on the server side.
-5. Any file importing Recharts must have `"use client"` at the top.
