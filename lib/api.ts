@@ -1,7 +1,84 @@
-import type { FinnhubQuote, FinnhubSearchResultItem, FinnhubSearchResult } from "@/types/finnhub";
+import type { FinnhubQuote, FinnhubSearchResultItem, FinnhubSearchResult, FinnhubCandles, Resolution } from "@/types/finnhub";
+import type { PortfolioResponse } from "@/types/portfolio";
 import { subWeeks, subMonths, subYears} from "date-fns";
-import type { FinnhubCandles } from "@/types/finnhub";
-import type { Resolution } from "@/types/finnhub";
+
+// Watchlist 
+
+export type WatchlistItem = {
+  id: string;
+  userId: string;
+  symbol: string;
+  createdAt: Date;
+};
+
+export async function fetchWatchlist(): Promise<WatchlistItem[]> {
+  const res = await fetch("/api/watchlist");
+  if (!res.ok) throw new Error("Unable to fetch watchlist");
+  return res.json();
+}
+
+export async function addToWatchlist(symbol: string) {
+  const res = await fetch("/api/watchlist", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ symbol }),
+  });
+  if (!res.ok) throw new Error("Unable to add symbol to watchlist");
+  return res.json();
+}
+
+export async function removeFromWatchlist(symbol: string) {
+  const res = await fetch(`/api/watchlist/${symbol}`, { method: "DELETE" });
+  if (!res.ok) throw new Error("Unable to remove symbol from watchlist");
+}
+
+// Portfolio
+
+export type AddHoldingInput = {
+  symbol: string;
+  quantity: number;
+  price: number;
+  date: string;
+};
+
+export type UpdateHoldingInput = {
+  id: string;
+  quantity: number;
+  averageCost: number;
+};
+
+export async function fetchPortfolio(): Promise<PortfolioResponse> {
+  const res = await fetch("/api/portfolio");
+  if (!res.ok) throw new Error("Unable to fetch portfolio");
+  return res.json();
+}
+
+export async function addHolding(input: AddHoldingInput) {
+  const res = await fetch("/api/portfolio", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) throw new Error("Unable to add holding");
+  return res.json();
+}
+
+export async function updateHolding({ id, quantity, averageCost }: UpdateHoldingInput) {
+  const res = await fetch(`/api/portfolio/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ quantity, averageCost }),
+  });
+  if (!res.ok) throw new Error("Unable to update holding");
+  return res.json();
+}
+
+export async function removeHolding(id: string) {
+  const res = await fetch(`/api/portfolio/${id}`, { method: "DELETE" });
+  if (!res.ok) throw new Error("Unable to remove holding");
+}
+
+// Stocks
 
 export async function fetchQuote(symbol: string): Promise<FinnhubQuote> {
     const res = await fetch(`/api/stocks/${symbol}/quote`);

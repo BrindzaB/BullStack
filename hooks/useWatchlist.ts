@@ -1,34 +1,7 @@
 "use client"
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
-type WatchlistItem = {
-    id: string,
-    userId: string,
-    symbol: string,
-    createdAt: Date,
-}
-
-async function fetchWatchlist(): Promise<WatchlistItem[]> {
-    const res = await fetch("/api/watchlist");
-    if (!res.ok) throw new Error("Unable to fetch watchlist");
-    return res.json();
-}
-
-async function addSymbol(symbol:string) {
-    const res = await fetch("/api/watchlist", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({symbol})
-    });
-    if (!res.ok) throw new Error("Unable to add symbol to watchlist");
-    return res.json();
-}
-
-async function removeSymbol(symbol: string) {
-    const res = await fetch(`/api/watchlist/${symbol}`, {method: "DELETE"});
-    if (!res.ok) throw new Error("Unable to delete symbol");
-}
+import { fetchWatchlist, addToWatchlist, removeFromWatchlist } from "@/lib/api";
 
 export function useWatchlist() {
     const queryClient = useQueryClient()
@@ -39,14 +12,14 @@ export function useWatchlist() {
     });
 
     const addMutation = useMutation({
-        mutationFn: addSymbol,
+        mutationFn: addToWatchlist,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["watchlist"] })
         }
     });
 
     const removeMutation = useMutation({
-        mutationFn: removeSymbol,
+        mutationFn: removeFromWatchlist,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["watchlist"] })
         }
