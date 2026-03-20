@@ -2,12 +2,13 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Star, ChartNoAxesCombined} from "lucide-react"
+import { LayoutDashboard, Star, ChartNoAxesCombined, Newspaper} from "lucide-react"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/watchlist", label: "Watchlist",  icon: Star },
-  { href: "/portfolio", label: "Portfolio", icon: ChartNoAxesCombined}
+  { href: "/portfolio", label: "Portfolio", icon: ChartNoAxesCombined},
+  { href: "/news", label: "News", icon: Newspaper}
 ]
 
 export default function Sidebar() {
