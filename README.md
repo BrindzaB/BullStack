@@ -2,8 +2,7 @@
 
 A personal finance dashboard for tracking stock watchlists and portfolios — built as a learning project with a full production-grade stack.
 
-![BullStack Portfolio Preview](./public/portfolio.png)
-
+![BullStack Stock Page](./public/stock.png)
 
 ---
 
@@ -23,43 +22,61 @@ A personal finance dashboard for tracking stock watchlists and portfolios — bu
 
 ---
 
+## Features
+
+- **Authentication** — Email/password and Google OAuth via NextAuth v5, middleware-protected routes
+- **Stock Search** — Debounced autocomplete search by symbol or company name
+- **Stock Detail** — Live quote, interactive price chart (1W / 1M / 3M / 1Y), per-stock news feed, add to watchlist
+- **Watchlist** — Personal watchlist with live quotes and change percentages; full table and dashboard widget views
+- **Portfolio** — Track holdings with real-time P&L calculations; add/remove positions with average cost tracking
+- **Market News** — General market headlines feed with article links; 2-hour server-side cache
+- **Dashboard** — Overview with portfolio summary, watchlist widget, and latest news
+
+---
+
 ## Project Structure
 
 ```
 bullstack/
 ├── app/
 │   ├── (auth)/                    # Centered card layout — login, register
-│   ├── (dashboard)/               # Protected pages — topbar layout
-│   │   ├── dashboard/             # Overview: watchlist widget
+│   ├── (dashboard)/               # Sidebar layout — all protected pages
+│   │   ├── dashboard/             # Overview: portfolio summary + watchlist + news
 │   │   ├── watchlist/             # Full watchlist with live quotes
-│   │   ├── stocks/[symbol]/       # Chart, quote card, add to watchlist
-│   │   ├── portfolio/             # Holdings table with P&L  [upcoming]
-│   │   └── news/                  # Market news feed          [upcoming]
+│   │   ├── portfolio/             # Holdings table with P&L
+│   │   ├── stocks/[symbol]/       # Chart, quote card, news, add to watchlist
+│   │   └── news/                  # Market-wide news feed
 │   └── api/
-│       ├── auth/[...nextauth]/
-│       ├── watchlist/             # GET, POST; [symbol]/ DELETE
-│       ├── portfolio/             # GET, POST; [id]/ PUT, DELETE [upcoming]
-│       └── stocks/[symbol]/       # quote/, candles/, search/
+│       ├── auth/[...nextauth]/    # NextAuth handler
+│       ├── user/register/         # POST — create new user
+│       ├── watchlist/             # GET + POST; [symbol]/ DELETE
+│       ├── portfolio/             # GET + POST; [id]/ PUT + DELETE
+│       └── stocks/[symbol]/       # quote/, candles/, profile/, news/; search/; market-news/
 ├── components/
 │   ├── auth/                      # LoginForm, RegisterForm
-│   ├── stock/                     # StockSearchBar, StockQuoteCard, StockChart
+│   ├── stock/                     # StockSearchBar, StockQuoteCard, StockChart, StockNewsFeed
 │   ├── watchlist/                 # WatchlistTable, WatchlistWidget, AddToWatchlistButton
-│   └── layout/                   # Topbar, UserMenu
+│   ├── portfolio/                 # HoldingsTable, PortfolioSummaryCard, AddHoldingModal, PortfolioWidget
+│   ├── news/                      # NewsCard
+│   ├── layout/                    # Sidebar, Topbar, UserMenu
+│   └── providers/                 # ReactQueryProvider
 ├── lib/
 │   ├── auth.ts                    # NextAuth v5 config
 │   ├── prisma.ts                  # Prisma singleton (globalThis pattern)
-│   ├── finnhub.ts                 # Finnhub API wrapper with in-memory cache
+│   ├── finnhub.ts                 # Finnhub API wrapper with in-memory TTL cache
 │   ├── yahoo.ts                   # yahoo-finance2 candles, normalized to Finnhub shape
 │   ├── cache.ts                   # Map-based TTL cache utility
 │   ├── api.ts                     # Client-side fetch wrappers
 │   └── utils.ts                   # cn(), formatCurrency(), formatPercent()
 ├── hooks/
-│   └── useWatchlist.ts            # React Query hook for watchlist CRUD
+│   ├── useWatchlist.ts            # React Query hook for watchlist CRUD
+│   └── usePortfolio.ts            # React Query hook for portfolio CRUD
 ├── types/
-│   ├── finnhub.ts
-│   └── next-auth.d.ts
+│   ├── finnhub.ts                 # Finnhub API response types
+│   ├── portfolio.ts               # App-level types with computed P&L fields
+│   └── next-auth.d.ts             # Adds user.id to Session type
 ├── prisma/schema.prisma
-└── middleware.ts                  # Route protection
+└── middleware.ts                  # Protects all (dashboard) routes
 ```
 
 ---
@@ -69,7 +86,7 @@ bullstack/
 ### Prerequisites
 
 - Node.js 18+
-- A PostgreSQL database (Railway recommended)
+- A PostgreSQL database ([Railway](https://railway.app/) recommended)
 - Finnhub API key — [finnhub.io/dashboard](https://finnhub.io/dashboard)
 - Google OAuth credentials (optional, for Google sign-in)
 
@@ -83,7 +100,7 @@ NEXTAUTH_URL=           # http://localhost:3000
 NEXTAUTH_SECRET=        # openssl rand -base64 32
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
-FINNHUB_API_KEY=
+FINNHUB_API_KEY=        # from finnhub.io/dashboard
 ```
 
 ### Install and Run
@@ -98,55 +115,67 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
+## Architecture Notes
+
+### API Key Security
+
+All Finnhub calls are server-side only — the API key never reaches the browser. Every client-side data fetch goes through a Next.js API route which validates the session before proxying to Finnhub.
+
+### Caching
+
+Responses are cached in-memory with TTL (`lib/cache.ts`). Bad or empty responses from Finnhub are not cached — only valid, non-empty data is stored.
+
+| Data | TTL |
+|---|---|
+| Quote | 60 s |
+| Candles (1W / 1M) | 30 min |
+| Candles (3M / 1Y) | 6 h |
+| Company profile | 24 h |
+| Stock news | 2 h |
+| Market news | 2 h |
+| Symbol search | 5 min |
+
+### Historical Price Data
+
+Finnhub's `/stock/candle` endpoint is premium-tier only. Historical OHLC data is sourced from `yahoo-finance2` (free, no key required) and normalized to the `FinnhubCandles` shape so all downstream chart code is unaffected.
+
+### Database
+
+PostgreSQL on Railway via Prisma 7. Uses `@prisma/adapter-pg` driver adapter (required for Prisma 7). All money and quantity fields use `Decimal` (not `Float`) to avoid floating-point precision issues.
+
+---
+
 ## Current Status
 
 ### Completed
 
 **Phase 1 — Project Setup**
-Scaffolded with Next.js 14 App Router, connected to Railway PostgreSQL, deployed to Vercel.
+Next.js 14 App Router scaffolded, connected to Railway PostgreSQL, deployed to Vercel.
 
 **Phase 2 — Authentication**
-Email/password registration with Zod validation and bcryptjs hashing. Google OAuth via NextAuth v5. Server Actions for auth forms (no API routes for auth). Middleware protects all `/dashboard/*` routes.
+Email/password registration with Zod validation and bcryptjs hashing. Google OAuth via NextAuth v5. Server Actions for auth forms. Middleware protects all dashboard routes.
 
 **Phase 3 — Stock Data**
-Live quotes via Finnhub (60s refresh). Historical candles via `yahoo-finance2` (normalized to Finnhub shape — Finnhub candles are premium-tier). Debounced symbol search autocomplete. Area chart with 1W / 1M / 3M / 1Y resolution switcher. All Finnhub calls are server-side only; the API key never reaches the browser.
+Live quotes via Finnhub (60s cache). Historical candles via `yahoo-finance2`. Debounced symbol search autocomplete. Area chart with 1W / 1M / 3M / 1Y resolution switcher.
 
 **Phase 4 — Watchlist**
-Users can add/remove stocks from a personal watchlist. Live quotes displayed in both a full table view and a dashboard widget. Mutations use optimistic updates via TanStack Query.
-
-**UI Polish**
-Custom design system applied — warm `surface-*` color palette, semantic `up`/`down` directional colors, `brand-*` amber accent. Monospace `tabular-nums` on all prices and stats. Sticky topbar with backdrop blur. `card`, `badge-up/down`, `btn-primary`, `input-base` utility classes throughout.
-
----
-
-### Upcoming
+Personal watchlist with live quotes and % change. Full table and dashboard widget. Optimistic mutations via TanStack Query. Clickable rows navigate to the stock detail page.
 
 **Phase 5 — Portfolio Tracking**
-Holdings table (symbol, shares, avg cost, current price, value, P&L). `AddHoldingModal` with symbol picker. `PortfolioSummaryCard` with total value and return. Portfolio summary widget on dashboard.
+Holdings table with Symbol, Shares, Avg Cost, Current Price, Value, P&L $ and P&L %. Add/remove positions via modal. Portfolio summary card (total value, total return). Dashboard widget shows top holdings. Clickable rows navigate to the stock detail page.
 
 **Phase 6 — News Feed**
-Per-stock news on the stock detail page. General market headlines on dashboard and `/news`. 15-minute server-side cache.
+Per-stock news on the stock detail page. General market headlines on `/news`. 2-hour server-side cache. Clickable articles open in a new tab.
+
+### Upcoming
 
 **Phase 7 — Production Polish**
 Loading skeletons, error boundaries, `<Suspense>` wrappers, mobile-responsive layout, end-to-end deploy validation.
 
 ---
 
-## Architecture Notes
-
-**Caching** — All external API calls are server-side, cached in-memory with TTL:
-
-| Data | TTL |
-|---|---|
-| Quote | 60 s |
-| Candles (intraday/weekly) | 30 min |
-| Candles (monthly/yearly) | 6 h |
-| Company profile | 24 h |
-| Symbol search | 5 min |
-
-## Additional screenshots
-
+## Additional Screenshots
 
 ![BullStack Dashboard Preview](./public/dashboard.png)
-![BullStack Stock Preview](./public/stock.png)
-
+![BullStack Portfolio Preview](./public/portfolio.png)
+![BullStack News Preview](./public/news.png)
