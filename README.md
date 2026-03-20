@@ -2,7 +2,7 @@
 
 A personal finance dashboard for tracking stock watchlists and portfolios — built as a learning project with a full production-grade stack.
 
-![BullStack Stock Page](./public/stock.png)
+![BullStack Stock Page](./public/stock1.png)
 
 ---
 
@@ -176,6 +176,6 @@ Loading skeletons, error boundaries, `<Suspense>` wrappers, mobile-responsive la
 
 ## Additional Screenshots
 
-![BullStack Dashboard Preview](./public/dashboard.png)
-![BullStack Portfolio Preview](./public/portfolio.png)
-![BullStack News Preview](./public/news.png)
+![BullStack Dashboard Preview](./public/dashboard1.png)
+![BullStack Portfolio Preview](./public/portfolio1.png)
+![BullStack News Preview](./public/news1.png)
