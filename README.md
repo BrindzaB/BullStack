@@ -170,13 +170,8 @@ Holdings table with Symbol, Shares, Avg Cost, Current Price, Value, P&L $ and P&
 **Phase 6 — News Feed**
 Per-stock news on the stock detail page. General market headlines on `/news`. 2-hour server-side cache. Clickable articles open in a new tab.
 
-**Phase 7 — Polish & Responsive**
-Shimmer skeleton loaders on all data-fetching components. Error states via React Query `isError`. Mobile-responsive layout with bottom tab navigation. Stock chart adapts tick density and Y-axis position on mobile. Holdings table horizontally scrollable on mobile.
-
-### Upcoming
-
-**Deployment**
-Add env vars to Vercel, set Google OAuth redirect URIs to production URL, run `npx prisma migrate deploy` against Railway production DB, end-to-end test with a fresh account.
+**Phase 7 — Polish, Responsive & Deployment**
+Shimmer skeleton loaders on all data-fetching components. Error states via React Query `isError`. Mobile-responsive layout with bottom tab navigation. Stock chart adapts tick density and Y-axis position on mobile. Holdings table horizontally scrollable on mobile. Deployed to Vercel with Railway PostgreSQL, Google OAuth configured for production.
 
 ---
 
