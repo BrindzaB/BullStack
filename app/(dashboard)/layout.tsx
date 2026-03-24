@@ -4,7 +4,7 @@ import BottomNav from "@/components/layout/BottomNav"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden backdrop-blur-xl bg-[rgba(0,0,0,0.1)]">
       <TopBar />
       <div className="flex flex-1 min-h-0 gap-4 p-4 pb-20 md:pb-4">
         <Sidebar />
