@@ -64,7 +64,7 @@ export default function HoldingsTable() {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-white/10" style={theadRow}>
+            <tr className="bg-black/50" style={theadRow}>
               <th className="py-3 pl-6 pr-4 text-left"><span className="section-label">Symbol</span></th>
               <th className="py-3 px-4 text-right"><span className="section-label">Shares</span></th>
               <th className="py-3 px-4 text-right"><span className="section-label">Avg Cost</span></th>
