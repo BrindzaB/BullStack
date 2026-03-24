@@ -51,12 +51,14 @@ export default function WatchlistWidget() {
     const { watchlist, isLoading } = useWatchlist()
 
     return (
-        <div className="card p-6">
+        <div className="card p-4 flex flex-col">
             <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-md font-semibold text-white">Watchlist</h2>
-                <Link href="/watchlist" className="text-xs text-brand-500 transition-colors hover:text-brand-300">
-                    View all →
-                </Link>
+                <div className="px-2 rounded-xl btn-view-all">
+                    <Link href="/watchlist" className="text-xs text-white transition-colors hover:text-brand-300">
+                        View all →
+                    </Link>
+                </div>
             </div>
 
             {isLoading && <WatchlistWidgetSkeleton />}
@@ -66,7 +68,7 @@ export default function WatchlistWidget() {
             )}
 
             {!isLoading && watchlist.length > 0 && (
-                <div className="divide-y divide-surface-100">
+                <div className="flex-1 divide-y divide-surface-100 p-2 rounded-xl widget-list">
                     {watchlist.slice(0, 4).map((item) => (
                         <WatchlistWidgetRow key={item.symbol} symbol={item.symbol} />
                     ))}

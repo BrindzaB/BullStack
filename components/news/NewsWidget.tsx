@@ -39,9 +39,11 @@ export default function NewsWidget() {
         <div className="card p-6">
             <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-md font-semibold text-white">Market News</h2>
-                <Link href="/news" className="text-xs text-brand-500 transition-colors hover:text-brand-300">
-                    View all →
-                </Link>
+                <div className="px-2 rounded-xl btn-view-all">
+                    <Link href="/news" className="text-xs text-brand-white transition-colors hover:text-brand-300">
+                        View all →
+                    </Link>
+                </div>
             </div>
 
             {isError && (
@@ -53,7 +55,7 @@ export default function NewsWidget() {
             )}
 
             {!isError && data && data.length > 0 && (
-                <div className="divide-y divide-surface-100">
+                <div className="divide-y divide-surface-100 px-4 widget-list">
                     {data.slice(0, 5).map((article) => (
                         <a
                             key={article.id}
