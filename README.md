@@ -6,6 +6,14 @@ BullStack is a full-stack stock tracking dashboard where you can monitor live pr
 
 ---
 
+## Live Demo
+
+**[bullstack-three.vercel.app](https://bullstack-three.vercel.app/)**
+
+No installation needed — just open the link, create an account (or use Google sign-in), and explore.
+
+---
+
 ## Tech Stack
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
