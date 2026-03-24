@@ -56,7 +56,7 @@ export default function PortfolioWidget() {
       {!isLoading && holdings.length > 0 && (
         <>
           <div className="widget-list">
-            <div className="divide-y divide-surface-100 p-2">
+            <div className="divide-y divide-surface-100">
               {holdings.slice(0, 3).map((holding) => {
                 const isGain = holding.pnl >= 0;
                 return (

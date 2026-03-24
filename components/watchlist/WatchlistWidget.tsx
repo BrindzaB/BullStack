@@ -68,7 +68,7 @@ export default function WatchlistWidget() {
             )}
 
             {!isLoading && watchlist.length > 0 && (
-                <div className="flex-1 divide-y divide-surface-100 p-2 rounded-xl widget-list">
+                <div className="flex-1 divide-y divide-surface-100 rounded-xl widget-list">
                     {watchlist.slice(0, 4).map((item) => (
                         <WatchlistWidgetRow key={item.symbol} symbol={item.symbol} />
                     ))}

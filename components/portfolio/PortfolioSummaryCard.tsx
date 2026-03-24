@@ -31,7 +31,7 @@ export default function PortfolioSummaryCard() {
     <div className="card p-6">
       <h2 className="mb-4 text-md font-semibold text-white">Portfolio Summary</h2>
 
-      <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 widget-list p-4">
 
         <div>
           <p className="section-label">Total Value</p>
