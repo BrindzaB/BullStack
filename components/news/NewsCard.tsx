@@ -1,4 +1,5 @@
-  import { format } from "date-fns"                                               
+  import { format } from "date-fns"
+  import Image from "next/image"
   import type { FinnhubNewsItem } from "@/types/finnhub"                          
                                                                                   
   interface NewsCardProps {                                                       
@@ -13,11 +14,14 @@
               rel="noopener noreferrer"
               className="flex items-center gap-4 py-3 group"
           >         
-            {article.image && (                                               
-                  <img
+            {article.image && (
+                  <Image
                       src={article.image}
                       alt={article.headline}
-                      className="h-16 w-24 shrink-0 rounded-lg object-cover ml-auto"                                                                        
+                      width={96}
+                      height={64}
+                      unoptimized
+                      className="h-16 w-24 shrink-0 rounded-lg object-cover ml-auto"
                   />
               )}                                                                  
               <div className="min-w-0 flex-1">

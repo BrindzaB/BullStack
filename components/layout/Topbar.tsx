@@ -12,7 +12,7 @@ export async function TopBar() {
       <div className="flex-1 md:flex md:justify-center">
         <StockSearchBar />
       </div>
-      {session && <UserMenu session={session} />}
+      {session && <UserMenu />}
     </header>
   )
 }

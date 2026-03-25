@@ -1,14 +1,9 @@
 "use client"
 
 import { signOut } from "next-auth/react"
-import { Session } from "next-auth"
 import { LogOut } from "lucide-react"
 
-interface Props {
-    session: Session
-}
-
-export function UserMenu({ session }: Props) {
+export function UserMenu() {
     return (
         <div className="flex items-center gap-4">
             <button
