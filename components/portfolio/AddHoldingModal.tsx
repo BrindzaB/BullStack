@@ -59,21 +59,21 @@ function SymbolSearch({value, onChange}: SymbolSearchProps) {
             className="input-base w-full"
         />
         {open && debouncedQuery.length >= 1 && (
-            <ul className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl backdrop-blur-xl" style={{ background: 'rgba(30, 30, 30, 1.0)', borderColor: 'rgba(255,255,255,0.10)', boxShadow: '0 16px 48px rgba(0,0,20,0.50)' }}>
+            <ul className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl backdrop-blur-xl" style={{ background: 'rgba(255, 255, 255, 1.0)', borderColor: 'rgba(255,255,255,0.10)', boxShadow: '0 16px 48px rgba(0,0,0,0.20)' }}>
             {isFetching && (
-                <li className="px-4 py-2.5 text-sm text-white/50">Searching...</li>
+                <li className="px-4 py-2.5 text-sm text-[var(--color-text-sub)]">Searching...</li>
             )}
             {!isFetching && results.length === 0 && (
-                <li className="px-4 py-2.5 text-sm text-white/50">No results</li>
+                <li className="px-4 py-2.5 text-sm text-[var(--color-text-sub)]">No results</li>
             )}
             {results.map((item) => (
                 <li
                 key={item.symbol}
                 onMouseDown={() => handleSelect(item.symbol)}
-                className="flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-white/[0.06]"
+                className="flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors"
                 >
-                <span className="num font-semibold text-[#f8f5fd]">{item.symbol}</span>
-                <span className="ml-3 truncate text-xs text-white/50">{item.description}</span>
+                <span className="num font-semibold text-[var(--color-text-sub)]">{item.symbol}</span>
+                <span className="ml-3 truncate text-xs text-[var(--color-text-sub)]">{item.description}</span>
                 </li>
             ))}
             </ul>
@@ -122,7 +122,7 @@ export default function AddHoldingModal({ isOpen, onClose }: AddHoldingModalProp
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"
       onMouseDown={onClose}
     >
       <div
@@ -130,22 +130,22 @@ export default function AddHoldingModal({ isOpen, onClose }: AddHoldingModalProp
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-display-sm text-[#f8f5fd]">Add Holding</h2>
+          <h2 className="text-display-sm text-[var(--color-text-main)]">Add Holding</h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-white/40 transition-colors hover:bg-white/[0.08] hover:text-white"
+            className="rounded-lg p-1.5 text-[var(--color-text-sub)] transition-colors hover:bg-black/[0.06] hover:text-[var(--color-text-main)]"
           >
             <X size={18} />
           </button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="section-label mb-1.5 block">Symbol</label>
+            <label className="section-label text-[var(--color-text-sub)] mb-1.5 block">Symbol</label>
             <SymbolSearch value={symbol} onChange={setSymbol} />
           </div>
 
           <div>
-            <label className="section-label mb-1.5 block">Shares</label>
+            <label className="section-label text-[var(--color-text-sub)] mb-1.5 block">Shares</label>
             <input
               type="number"
               min="0"
@@ -158,7 +158,7 @@ export default function AddHoldingModal({ isOpen, onClose }: AddHoldingModalProp
           </div>
 
           <div>
-            <label className="section-label mb-1.5 block">Purchase Price (USD)</label>
+            <label className="section-label text-[var(--color-text-sub)] mb-1.5 block">Purchase Price (USD)</label>
             <input
               type="number"
               min="0"
@@ -171,7 +171,7 @@ export default function AddHoldingModal({ isOpen, onClose }: AddHoldingModalProp
           </div>
 
           <div>
-            <label className="section-label mb-1.5 block">Date</label>
+            <label className="section-label text-[var(--color-text-sub)] mb-1.5 block">Date</label>
             <input
               type="date"
               value={date}

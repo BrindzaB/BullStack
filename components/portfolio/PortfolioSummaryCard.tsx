@@ -29,33 +29,33 @@ export default function PortfolioSummaryCard() {
 
   return (
     <div className="card p-6">
-      <h2 className="mb-4 text-md font-semibold text-white">Portfolio Summary</h2>
+      <h2 className="mb-4 text-md font-semibold text-[var(--color-text-sub)]">Portfolio Summary</h2>
 
-      <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 widget-list p-4">
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 p-4">
 
         <div>
-          <p className="section-label">Total Value</p>
-          <p className="num mt-1 text-display-sm text-[#f8f5fd]">
+          <p className="section-label text-[var(--color-text-sub)]">Total Value</p>
+          <p className="num mt-1 text-display-sm text-[var(--color-text-sub)]">
             {formatCurrency(summary.totalValue)}
           </p>
         </div>
 
         <div>
-          <p className="section-label">Total Cost</p>
-          <p className="num mt-1 text-display-sm text-[#f8f5fd]">
+          <p className="section-label text-[var(--color-text-sub)]">Total Cost</p>
+          <p className="num mt-1 text-display-sm text-[var(--color-text-sub)]">
             {formatCurrency(summary.totalCost)}
           </p>
         </div>
 
         <div>
-          <p className="section-label">P&amp;L</p>
+          <p className="section-label text-[var(--color-text-sub)]">P&amp;L</p>
           <p className={`num mt-1 text-display-sm font-semibold ${isGain ? "text-up" : "text-down"}`}>
             {isGain ? "+" : ""}{formatCurrency(summary.totalPnL)}
           </p>
         </div>
 
         <div>
-          <p className="section-label">Return</p>
+          <p className="section-label text-[var(--color-text-sub)]">Return</p>
           <p className={`num mt-1 text-display-sm font-semibold ${isGain ? "text-up" : "text-down"}`}>
             {formatPercent(summary.totalPnLPercent)}
           </p>

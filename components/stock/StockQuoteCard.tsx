@@ -43,26 +43,26 @@ export default function StockQuoteCard({ symbol }: { symbol: string }) {
     const isPositive = data.dp >= 0;
 
     return (
-        <div className="card p-8">
-            <p className="section-label">{symbol}</p>
-            <p className="mt-1 text-display-md num text-[#f8f5fd]">{formatCurrency(data.c)}</p>
+        <div className="card p-6">
+            <p className="section-label text-[var(--color-text-sub)]">{symbol}</p>
+            <p className="mt-1 text-display-md num text-[var(--color-text-main)]">{formatCurrency(data.c)}</p>
             <div className="mt-2">
                 <span className={isPositive ? "badge-up" : "badge-down"}>
                     {isPositive ? "+" : ""}{formatCurrency(data.d)} ({formatPercent(data.dp)})
                 </span>
             </div>
-            <div className="mt-6 grid grid-cols-3 gap-4 pt-5" style={{ borderTop: '1px solid rgba(72,71,77,0.22)' }}>
-                <div>
-                    <p className="section-label">Open</p>
-                    <p className="num mt-1 text-sm font-medium text-white/80">{formatCurrency(data.o)}</p>
+            <div className="mt-6 grid grid-cols-3 gap-8 pt-5">
+                <div className="widget-list pl-2 py-2 text-center">
+                    <p className="section-label text-[var(--color-text-sub)]">Open</p>
+                    <p className="num mt-1 text-sm font-medium text-[var(--color-text-main)]">{formatCurrency(data.o)}</p>
                 </div>
-                <div>
-                    <p className="section-label">High</p>
-                    <p className="num mt-1 text-sm font-medium text-white/80">{formatCurrency(data.h)}</p>
+                <div className="widget-list pl-2 py-2 text-center">
+                    <p className="section-label text-[var(--color-text-sub)]">High</p>
+                    <p className="num mt-1 text-sm font-medium text-[var(--color-text-main)]">{formatCurrency(data.h)}</p>
                 </div>
-                <div>
-                    <p className="section-label">Low</p>
-                    <p className="num mt-1 text-sm font-medium text-white/80">{formatCurrency(data.l)}</p>
+                <div className="widget-list pl-2 py-2 text-center">
+                    <p className="section-label text-[var(--color-text-sub)]">Low</p>
+                    <p className="num mt-1 text-sm font-medium text-[var(--color-text-main)]">{formatCurrency(data.l)}</p>
                 </div>
             </div>
         </div>

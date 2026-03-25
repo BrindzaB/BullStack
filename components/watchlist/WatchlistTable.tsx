@@ -19,14 +19,14 @@ function WatchlistRow({ symbol, onRemove }: { symbol: string, onRemove: () => vo
     const isPositive = (data?.dp ?? 0) >= 0;
 
     return (
-        <tr className="group transition-colors hover:bg-white/[0.04] cursor-pointer"
+        <tr className="group transition-colors hover:bg-[var(--color-light-layer-2)] cursor-pointer"
             style={ghostRow}
             onClick={() => router.push(`/stocks/${symbol}`)}>
             <td className="py-3.5 pl-6 pr-4">
-                <span className="num font-semibold text-[#f8f5fd]">{symbol}</span>
+                <span className="num font-semibold text-[var(--color-text-sub)]">{symbol}</span>
             </td>
             <td className="py-3.5 px-4">
-                <span className="num text-sm text-white/80">
+                <span className="num text-sm text-[var(--color-text-sub)]">
                     {data ? formatCurrency(data.c) : "—"}
                 </span>
             </td>
@@ -36,13 +36,13 @@ function WatchlistRow({ symbol, onRemove }: { symbol: string, onRemove: () => vo
                         {formatPercent(data.dp)}
                     </span>
                 ) : (
-                    <span className="text-sm text-white/40">—</span>
+                    <span className="text-sm text-[var(--color-text-sub)]">—</span>
                 )}
             </td>
             <td className="py-3.5 pl-4 pr-6 text-right">
                 <button
                     onClick={(e) => { e.stopPropagation(); onRemove(); }}
-                    className="rounded-md px-2 py-1 text-xs font-medium text-white/40
+                    className="rounded-md px-2 py-1 text-xs font-medium text-[var(--color-text-sub)]
                                opacity-0 transition-all
                                hover:bg-[rgba(251,113,133,0.10)] hover:text-[#fb7185]
                                group-hover:opacity-100"
@@ -61,7 +61,7 @@ function WatchlistSkeleton() {
         <div className="card overflow-hidden">
             <table className="w-full text-sm">
                 <thead>
-                    <tr className="bg-white/[0.03]" style={theadRow}>
+                    <tr style={theadRow}>
                         <th className="py-3 pl-6 pr-4 text-left"><span className="section-label">Symbol</span></th>
                         <th className="py-3 px-4 text-left"><span className="section-label">Price</span></th>
                         <th className="py-3 px-4 text-left"><span className="section-label">Change</span></th>
@@ -91,7 +91,7 @@ export default function WatchlistTable() {
     if (watchlist.length === 0) {
         return (
             <div className="card p-8">
-                <p className="text-sm text-white/50">Watchlist is currently empty.</p>
+                <p className="text-sm text-[var(--color-text-sub)]">Watchlist is currently empty.</p>
             </div>
         )
     }
@@ -100,7 +100,7 @@ export default function WatchlistTable() {
         <div className="card overflow-hidden">
             <table className="w-full text-sm">
                 <thead>
-                    <tr className="bg-black/50" style={theadRow}>
+                    <tr className="header rounded-xl text-[var(--color-text-sub)]" style={theadRow}>
                         <th className="py-3 pl-6 pr-4 text-left"><span className="section-label">Symbol</span></th>
                         <th className="py-3 px-4 text-left"><span className="section-label">Price</span></th>
                         <th className="py-3 px-4 text-left"><span className="section-label">Change</span></th>

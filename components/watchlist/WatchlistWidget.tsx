@@ -17,10 +17,10 @@ function WatchlistWidgetRow({symbol}: {symbol: string}) {
     const isPositive = (data?.dp ?? 0) >= 0
 
     return (
-        <Link href={`/stocks/${symbol}`} className="flex items-center justify-between py-2.5 px-2 group hover:bg-brand-500/10 hover:rounded-xl">
-            <span className="num font-semibold text-surface-900 transition-colors group-hover:text-brand-700">{symbol}</span>
+        <Link href={`/stocks/${symbol}`} className="flex items-center justify-between py-2.5 px-2 group hover:rounded-lg hover:bg-[var(--color-light-layer-1)]">
+            <span className="num font-semibold text-[var(--color-text-main)] transition-colors group-hover:text-[var(--color-text-hover)]">{symbol}</span>
             <div className="text-right">
-                <p className="num text-sm font-medium text-surface-800">
+                <p className="num text-sm font-medium text-[var(--color-text-main)]">
                     {data ? formatCurrency(data.c) : "—"}
                 </p>
                 <p className={`num text-xs ${isPositive ? "text-up" : "text-down"}`}>
@@ -33,7 +33,7 @@ function WatchlistWidgetRow({symbol}: {symbol: string}) {
 
 function WatchlistWidgetSkeleton() {
     return (
-        <div className="divide-y divide-surface-100">
+        <div className="divide-y divide-black/10">
             {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="flex items-center justify-between py-2.5 px-2">
                     <Skeleton className="h-4 w-12" />
@@ -53,9 +53,9 @@ export default function WatchlistWidget() {
     return (
         <div className="card p-4 flex flex-col">
             <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-md font-semibold text-white">Watchlist</h2>
+                <h2 className="text-md font-semibold text-[var(--color-text-sub)]">Watchlist</h2>
                 <div className="px-2 rounded-xl btn-view-all">
-                    <Link href="/watchlist" className="text-xs text-white transition-colors hover:text-brand-300">
+                    <Link href="/watchlist" className="text-xs text-[var(--color-text-sub)] transition-colors hover:text-[var(--color-text-hover)]">
                         View all →
                     </Link>
                 </div>
@@ -64,11 +64,11 @@ export default function WatchlistWidget() {
             {isLoading && <WatchlistWidgetSkeleton />}
 
             {!isLoading && watchlist.length === 0 && (
-                <p className="text-sm text-surface-500">No stocks in your watchlist yet.</p>
+                <p className="text-sm text-[var(--color-text-main)]">No stocks in your watchlist yet.</p>
             )}
 
             {!isLoading && watchlist.length > 0 && (
-                <div className="flex-1 divide-y divide-surface-100 rounded-xl widget-list">
+                <div className="flex-1 divide-y divide-black/10 rounded-xl widget-list px-4 py-3">
                     {watchlist.slice(0, 4).map((item) => (
                         <WatchlistWidgetRow key={item.symbol} symbol={item.symbol} />
                     ))}

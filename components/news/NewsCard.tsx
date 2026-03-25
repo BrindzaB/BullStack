@@ -17,19 +17,17 @@
                   <img
                       src={article.image}
                       alt={article.headline}
-                      className="h-16 w-24 shrink-0 rounded-lg object-cover 
-  ml-auto"                                                                        
+                      className="h-16 w-24 shrink-0 rounded-lg object-cover ml-auto"                                                                        
                   />
               )}                                                                  
               <div className="min-w-0 flex-1">
-                  <p className="section-label mb-1">                              
-                      {article.source} · {format(new Date(article.datetime *    
-  1000), "MMM d")}                                                                
+                  <p className="section-label mb-1 text-[var(--color-text-sub)]">                              
+                      {article.source} · {format(new Date(article.datetime * 1000), "MMM d")}                                                                
                   </p>                                                          
-                  <p className="text-sm font-semibold text-[#f8f5fd] line-clamp-2 group-hover:text-[#22d3ee] transition-colors">
+                  <p className="text-sm font-semibold text-[var(--color-text-main)] line-clamp-2 group-hover:text-[var(--color-text-hover)] transition-colors">
                       {article.headline}
                   </p>
-                  <p className="text-xs text-white/50 line-clamp-2 mt-0.5">
+                  <p className="text-xs text-[var(--color-text-sub)] line-clamp-2 mt-0.5">
                       {article.summary}                                           
                   </p>                                                            
               </div>                                                                                                                                                                                    

@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 function PortfolioWidgetSkeleton() {
     return (
         <>
-            <div className="divide-y divide-surface-100">
+            <div className="divide-y divide-black/10">
                 {Array.from({ length: 3 }).map((_, i) => (
                     <div key={i} className="flex items-center justify-between py-2.5 px-2">
                         <Skeleton className="h-4 w-12" />
@@ -19,7 +19,7 @@ function PortfolioWidgetSkeleton() {
                     </div>
                 ))}
             </div>
-            <div className="mt-4 flex items-center justify-between border-t border-surface-100 pt-4">
+            <div className="mt-4 flex items-center justify-between border-t border-black/10 pt-4">
                 <div>
                     <Skeleton className="h-3 w-16 mb-1.5" />
                     <Skeleton className="h-4 w-24" />
@@ -39,9 +39,9 @@ export default function PortfolioWidget() {
   return (
     <div className="card p-4">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-md font-semibold text-white">Portfolio</h2>
+        <h2 className="text-md font-semibold text-[var(--color-text-sub)]">Portfolio</h2>
         <div className="px-2 rounded-xl btn-view-all">
-          <Link href="/portfolio" className="text-xs text-white transition-colors hover:text-brand-300">
+          <Link href="/portfolio" className="text-xs text-[var(--color-text-sub)] transition-colors hover:text-[var(--color-text-hover)]">
             View all →
           </Link>
         </div>
@@ -50,20 +50,20 @@ export default function PortfolioWidget() {
       {isLoading && <PortfolioWidgetSkeleton />}
 
       {!isLoading && holdings.length === 0 && (
-        <p className="text-sm text-surface-500">No holdings yet.</p>
+        <p className="text-sm text-[var(--color-text-main)]">No holdings yet.</p>
       )}
 
       {!isLoading && holdings.length > 0 && (
         <>
-          <div className="widget-list">
-            <div className="divide-y divide-surface-100">
+          <div className="">
+            <div className="divide-y divide-black/10 px-4 py-3 widget-list">
               {holdings.slice(0, 3).map((holding) => {
                 const isGain = holding.pnl >= 0;
                 return (
-                  <Link href={`/stocks/${holding.symbol}`} key={holding.id} className="flex items-center justify-between py-2.5 px-2 group hover:bg-brand-500/10 hover:rounded-xl">
-                    <span className="num font-semibold text-surface-900 transition-colors group-hover:text-brand-700">{holding.symbol}</span>
+                  <Link href={`/stocks/${holding.symbol}`} key={holding.id} className="flex items-center justify-between py-2.5 px-2 group hover:rounded-lg hover:bg-[var(--color-light-layer-1)]">
+                    <span className="num font-semibold text-[var(--color-text-main)] transition-colors group-hover:text-[var(--color-text-hover)]">{holding.symbol}</span>
                     <div className="text-right">
-                      <p className="num text-sm font-medium text-surface-800">
+                      <p className="num text-sm font-medium text-[var(--color-text-sub)]">
                         {formatCurrency(holding.currentValue)}
                       </p>
                       <p className={`num text-xs ${isGain ? "text-up" : "text-down"}`}>
@@ -75,15 +75,15 @@ export default function PortfolioWidget() {
               })}
             </div>
 
-            <div className="mt-4 p-4 flex items-center justify-between border-t border-surface-100 pt-4">
-              <div>
-                <p className="section-label text-brand-700">Total Value</p>
-                <p className="num mt-0.5 text-sm font-semibold text-surface-900">
+            <div className="mt-4 flex items-center justify-between">
+              <div className="p-4">
+                <p className="section-label text-[var(--color-text-sub)]">Total Value</p>
+                <p className="num mt-0.5 text-sm font-semibold text-[var(--color-text-main)]">
                   {formatCurrency(summary.totalValue)}
                 </p>
               </div>
-              <div className="text-right">
-                <p className="section-label text-brand-700">Total Return</p>
+              <div className="text-right p-4">
+                <p className="section-label text-[var(--color-text-sub)]">Total Return</p>
                 <p className={`num mt-0.5 text-sm font-semibold ${summary.totalPnL >= 0 ? "text-up" : "text-down"}`}>
                   {formatPercent(summary.totalPnLPercent)}
                 </p>

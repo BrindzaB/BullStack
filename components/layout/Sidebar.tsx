@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="hidden md:flex w-56 shrink-0 h-full rounded-2xl flex-col overflow-hidden backdrop-blur-xl menu"
+      className="hidden lg:flex w-56 shrink-0 h-full rounded-2xl flex-col overflow-hidden menu"
       
     >
       <nav className="flex-1 px-3 py-4 space-y-0.5">
@@ -27,15 +27,16 @@ export default function Sidebar() {
             <Link
               key={href}
               href={href}
+              style={active ? { boxShadow: 'var(--shadow-small)' } : undefined}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150
                 ${active
-                  ? "bg-[rgba(34,211,238,0.12)] text-[#22d3ee]"
-                  : "text-white hover:bg-white/[0.06] hover:text-white/90"
+                  ? "bg-[var(--color-light-layer-2)] text-[var(--color-text-main)]"
+                  : "text-[var(--color-text-sub)] hover:bg-[var(--color-light-layer-2)]"
                 }`}
             >
               <Icon
                 size={18}
-                className={active ? "text-[#22d3ee]" : "text-white"}
+                className={active ? "text-[var(--color-text-main)]" : "text-[var(--color-text-sub)]"}
               />
               {label}
             </Link>

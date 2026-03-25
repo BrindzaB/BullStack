@@ -52,17 +52,17 @@ export default function StockChart({ symbol }: { symbol: string}) {
     const resolutions: Resolution[] = ["1W", "1M", "3M", "1Y"];
 
     return (
-    <div className="card p-4 lg:p-8 h-full flex flex-col bg-black/40">
+    <div className="card h-full flex flex-col">
 
-      <div className="mb-6 flex gap-1.5 shrink-0">
+      <div className="mx-4 mt-4 p-2 flex gap-1.5 shrink-0 py-1 widget-list w-fit">
         {resolutions.map((r) => (
           <button
             key={r}
             onClick={() => setResolution(r)}
             className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors focus:outline-none ${
               resolution === r
-                ? "bg-[rgba(34,211,238,0.15)] text-[#22d3ee]"
-                : "text-white hover:text-white/80 hover:bg-white/[0.06]"
+                ? "text-[var(--color-text-main)] bg-[var(--background)] rounded-3xl"
+                : "text-[var(--color-text-sub)] hover:text-[var(--color-text-hover)]"
             }`}
           >
             {r}
@@ -83,18 +83,18 @@ export default function StockChart({ symbol }: { symbol: string}) {
       )}
 
       {!isLoading && !isError && (
-        <div className="flex-1 min-h-0">
+        <div className="flex-1 min-h-0 pr-4 py-4">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <defs>
                 <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ffffff" stopOpacity={0.6} />
-                  <stop offset="95%" stopColor="#ffffff" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#151515" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#151515" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <XAxis
                 dataKey="date"
-                tick={{ fontSize: 11, fill: "#ffffff", fontFamily: "ui-monospace, monospace" }}
+                tick={{ fontSize: 11, fill: "#606060", fontFamily: "ui-monospace, monospace" }}
                 tickLine={false}
                 axisLine={false}
                 interval={isMobile ? getMobileTickInterval(resolution) : getTickInterval(resolution)}
@@ -102,7 +102,7 @@ export default function StockChart({ symbol }: { symbol: string}) {
               />
               <YAxis
                 domain={["auto", "auto"]}
-                tick={{ fontSize: 11, fill: "#ffffff", fontFamily: "ui-monospace, monospace" }}
+                tick={{ fontSize: 11, fill: "#606060", fontFamily: "ui-monospace, monospace" }}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(v) => `$${v}`}
@@ -119,14 +119,14 @@ export default function StockChart({ symbol }: { symbol: string}) {
                   boxShadow: "0 8px 32px rgba(20,10,40,0.40)",
                   padding: "8px 12px",
                 }}
-                labelStyle={{ color: "rgba(255,255,255,0.45)", marginBottom: "2px" }}
-                itemStyle={{ color: "#f8f5fd" }}
+                labelStyle={{ color: "rgba(255,255,255,0.50)", marginBottom: "2px" }}
+                itemStyle={{ color: "rgba(255,255,255,0.90)" }}
                 formatter={(value) => [`$${Number(value).toFixed(2)}`, "Price"]}
               />
               <Area
                 type="monotone"
                 dataKey="price"
-                stroke="#ffffff"
+                stroke="#151515"
                 strokeWidth={1.5}
                 fill="url(#priceGradient)"
                 dot={false}

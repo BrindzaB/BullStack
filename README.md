@@ -2,6 +2,8 @@
 
 BullStack is a full-stack stock tracking dashboard where you can monitor live prices, track your holdings with real-time P&L, and stay on top of market news — all in one clean, fast interface. Built from scratch as a learning project, but engineered with the same patterns you'd find in a production app: server-side API proxying, in-memory caching, session-authenticated routes, and a custom design system.
 
+The UI uses a light warm minimal design language — layered warm-white surfaces (`#f0ece9` → `#F9F8F6` → `#FFFFFF`) with multi-layer box shadows for depth, Geist Sans for text, and Geist Mono for all numeric data. All design tokens are CSS custom properties defined in `:root`.
+
 ![BullStack Stock Page](./public/stock.png)
 
 ---
@@ -181,10 +183,13 @@ Per-stock news on the stock detail page. General market headlines on `/news`. 2-
 **Phase 7 — Polish, Responsive & Deployment**
 Shimmer skeleton loaders on all data-fetching components. Error states via React Query `isError`. Mobile-responsive layout with bottom tab navigation. Stock chart adapts tick density and Y-axis position on mobile. Holdings table horizontally scrollable on mobile. Deployed to Vercel with Railway PostgreSQL, Google OAuth configured for production.
 
+**Design Overhaul**
+Migrated from a dark glassmorphism aesthetic to a light warm minimal design system. All design tokens (`--background`, `--color-light-layer-*`, `--color-text-*`, `--shadow-*`) are CSS custom properties in `:root`. Removed Tailwind `surface` and `brand` color scales in favour of direct `var()` references. Shimmer skeletons updated for light backgrounds.
+
 ---
 
 ## Additional Screenshots
 
-![BullStack Dashboard Preview](./public/dashboard1.png)
-![BullStack Portfolio Preview](./public/portfolio1.png)
-![BullStack News Preview](./public/news1.png)
+![BullStack Dashboard Preview](./public/dashboard.png)
+![BullStack Portfolio Preview](./public/portfolio.png)
+![BullStack News Preview](./public/news.png)

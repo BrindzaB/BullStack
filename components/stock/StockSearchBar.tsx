@@ -43,7 +43,7 @@ export default function StockSearchBar() {
     }
 
     return (
-        <div ref={containerRef} className="relative w-full md:w-96 rounded-2xl bg-white/10">
+        <div ref={containerRef} className="relative w-full md:w-96">
             <input
                 type="text"
                 value={input}
@@ -55,21 +55,21 @@ export default function StockSearchBar() {
                 className="input-base"
             />
             {open && debouncedQuery.length >= 1 && (
-                <ul className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-white/[0.3] shadow-dropdown backdrop-blur-xl animate-slide-down" style={{ background: 'rgba(30, 30, 30, 1.0)', borderColor: 'rgba(255,255,255,0.10)', boxShadow: '0 16px 48px rgba(0,0,20,0.50)' }}>
+                <ul className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-white/[0.3] shadow-dropdown backdrop-blur-xl animate-slide-down" style={{ background: 'rgba(255, 255, 255, 1.0)', borderColor: 'rgba(255,255,255,0.0)', boxShadow: '0 16px 30px rgba(0,0,0,0.15)' }}>
                     {isFetching && (
-                        <li className="px-4 py-2.5 text-sm text-white/50">Searching...</li>
+                        <li className="px-4 py-2.5 text-sm text-[var(--color-text-sub)]">Searching...</li>
                     )}
                     {!isFetching && results.length === 0 && (
-                        <li className="px-4 py-2.5 text-sm text-white/50">No results</li>
+                        <li className="px-4 py-2.5 text-sm text-[var(--color-text-sub)]">No results</li>
                     )}
                     {results.map((item) => (
                         <li
                             key={item.symbol}
                             onMouseDown={() => handleSelect(item.symbol)}
-                            className="flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-white/[0.06]"
+                            className="flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-[var(--color-light-layer-1)]"
                         >
-                            <span className="num font-semibold text-[#f8f5fd]">{item.symbol}</span>
-                            <span className="ml-3 truncate text-xs text-white/50">{item.description}</span>
+                            <span className="num font-semibold text-[var(--color-text-sub)]">{item.symbol}</span>
+                            <span className="ml-3 truncate text-xs text-[var(--color-text-sub)]">{item.description}</span>
                         </li>
                     ))}
                 </ul>

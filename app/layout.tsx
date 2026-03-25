@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider"
-import ColorBends from "@/components/ui/ColorBends"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,9 +31,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{ position: 'relative' }}
       >
-        <div style={{ position: 'fixed', inset: 0, zIndex: -1 }}>
-          <ColorBends colors={['#020c18', '#064673', '#0e7490', '#1e1b4b']} />
-        </div>
         <ReactQueryProvider>
           {children}
         </ReactQueryProvider>

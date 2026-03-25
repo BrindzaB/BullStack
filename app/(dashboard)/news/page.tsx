@@ -9,7 +9,7 @@ function NewsSkeleton() {
     return (
         <div className="card p-6 flex flex-col flex-1 min-h-0">
             <Skeleton className="h-5 w-36 mb-6" />
-            <div className="divide-y divide-surface-100">
+            <div className="divide-y divide-black/10">
                 {Array.from({ length: 8 }).map((_, i) => (
                     <div key={i} className="flex items-center gap-4 py-3">
                         <div className="min-w-0 flex-1 space-y-2">
@@ -50,14 +50,20 @@ export default function NewsPage() {
 
             {!isError && data?.length === 0 && (
                 <div className="card p-6">
-                    <p className="text-sm text-surface-500">No news available right now.</p>
+                    <p className="text-sm text-[var(--color-text-sub)]">No news available right now.</p>
                 </div>
             )}
 
             {!isError && data && data.length > 0 && (
-                <div className="card flex flex-col flex-1 min-h-0 p-6 bg-black/30">
-                    <h2 className="mb-4 text-md font-semibold text-white">Market News</h2>
-                    <div className="divide-y divide-surface-100 overflow-y-auto flex-1 min-h-0">
+                <div className="card flex flex-col flex-1 min-h-0">
+                    <div className="px-4 py-3 header rounded-t-2xl">
+                        <h2 className="text-md font-semibold text-[var(--color-text-sub)]">Market News</h2>
+                    </div>
+                    <div className="divide-y divide-black/10 overflow-y-auto flex-1 min-h-0 px-4 py-2
+                        [&::-webkit-scrollbar]:w-1
+                        [&::-webkit-scrollbar-track]:bg-transparent
+                        [&::-webkit-scrollbar-thumb]:bg-black/10
+                        [&::-webkit-scrollbar-thumb]:rounded-full">
                         {data.map((article) => (
                             <NewsCard key={article.id} article={article} />
                         ))}

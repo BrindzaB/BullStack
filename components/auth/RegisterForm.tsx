@@ -25,12 +25,12 @@ export function RegisterForm() {
     <div className="card w-full max-w-md p-8">
       <Image src="/logo.png" alt="BullStack" width={140} height={38} className="mb-5" />
 
-      <h1 className="text-display-sm text-[#f8f5fd]">Create an account</h1>
-      <p className="mt-1 text-sm text-white/55">Start tracking your portfolio today</p>
+      <h1 className="text-display-sm text-[var(--color-text-main)]">Create an account</h1>
+      <p className="mt-1 text-sm text-[var(--color-text-sub)]">Start tracking your portfolio today</p>
 
       <form action={formAction} className="mt-6 space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-white/75 mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-[var(--color-text-sub)] mb-1">
             Name
           </label>
           <input
@@ -47,7 +47,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-white/75 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-[var(--color-text-sub)] mb-1">
             Email
           </label>
           <input
@@ -64,7 +64,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-white/75 mb-1">
+          <label htmlFor="password" className="block text-sm font-medium text-[var(--color-text-sub)] mb-1">
             Password
           </label>
           <input
@@ -83,9 +83,9 @@ export function RegisterForm() {
         <SubmitButton />
       </form>
 
-      <p className="mt-6 text-center text-xs text-white/50">
+      <p className="mt-6 text-center text-xs text-[var(--color-text-sub)]">
         Already have an account?{" "}
-        <Link href="/login" className="font-medium text-[#22d3ee] hover:text-[#67e8f9] underline underline-offset-2">
+        <Link href="/login" className="font-medium text-[var(--color-text-main)] hover:text-[var(--color-text-hover)] underline underline-offset-2">
           Sign in
         </Link>
       </p>

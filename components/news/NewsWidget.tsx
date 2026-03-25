@@ -10,12 +10,12 @@ function NewsWidgetSkeleton() {
     return (
         <div className="card p-6">
             <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-md font-semibold text-brand-500">Market News</h2>
-                <Link href="/news" className="text-xs text-brand-500 transition-colors hover:text-brand-300">
+                <h2 className="text-md font-semibold text-[var(--color-text-sub)]">Market News</h2>
+                <Link href="/news" className="text-xs text-[var(--color-text-sub)] transition-colors hover:text-[var(--color-text-hover)]">
                     View all →
                 </Link>
             </div>
-            <div className="divide-y divide-surface-100">
+            <div className="divide-y divide-black/10">
                 {Array.from({ length: 5 }).map((_, i) => (
                     <div key={i} className="py-2.5 space-y-1.5">
                         <Skeleton className="h-3 w-32" />
@@ -38,9 +38,9 @@ export default function NewsWidget() {
     return (
         <div className="card p-6">
             <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-md font-semibold text-white">Market News</h2>
+                <h2 className="text-md font-semibold text-[var(--color-text-sub)]">Market News</h2>
                 <div className="px-2 rounded-xl btn-view-all">
-                    <Link href="/news" className="text-xs text-brand-white transition-colors hover:text-brand-300">
+                    <Link href="/news" className="text-xs text-[var(--color-text-sub)] transition-colors hover:text-[var(--color-text-hover)]">
                         View all →
                     </Link>
                 </div>
@@ -51,11 +51,11 @@ export default function NewsWidget() {
             )}
 
             {!isError && data && data.length === 0 && (
-                <p className="text-sm text-surface-500">No news available.</p>
+                <p className="text-sm text-[var(--color-text-main)]">No news available.</p>
             )}
 
             {!isError && data && data.length > 0 && (
-                <div className="divide-y divide-surface-100 px-4 widget-list">
+                <div className="divide-y divide-black/10 px-4 widget-list">
                     {data.slice(0, 5).map((article) => (
                         <a
                             key={article.id}
@@ -64,10 +64,10 @@ export default function NewsWidget() {
                             rel="noopener noreferrer"
                             className="block py-2.5 group"
                         >
-                            <p className="section-label mb-0.5">
+                            <p className="section-label text-[var(--color-text-sub)] mb-0.5">
                                 {article.source} · {format(new Date(article.datetime * 1000), "MMM d")}
                             </p>
-                            <p className="text-sm font-medium text-surface-900 line-clamp-1 group-hover:text-brand-100 transition-colors">
+                            <p className="text-sm font-medium text-[var(--color-text-main)] line-clamp-1 group-hover:text-[var(--color-text-hover)] transition-colors">
                                 {article.headline}
                             </p>
                         </a>
