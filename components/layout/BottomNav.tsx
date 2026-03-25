@@ -24,7 +24,7 @@ export default function BottomNav() {
             key={href}
             href={href}
             className={`flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium transition-colors
-              ${active ? "text-[#22d3ee]" : "text-white/40 hover:text-white/70"}`}
+              ${active ? "text-white" : "text-white/40 hover:text-white/70"}`}
           >
             <Icon size={20} />
             <span>{label}</span>
