@@ -115,40 +115,6 @@ bullstack/
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- A PostgreSQL database ([Railway](https://railway.app/) recommended)
-- Finnhub API key — [finnhub.io/dashboard](https://finnhub.io/dashboard)
-- Google OAuth credentials (optional, for Google sign-in)
-
-### Environment Variables
-
-Create a `.env.local` file in the project root:
-
-```env
-DATABASE_URL=           # Railway PostgreSQL connection string
-NEXTAUTH_URL=           # http://localhost:3000
-NEXTAUTH_SECRET=        # openssl rand -base64 32
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-FINNHUB_API_KEY=        # from finnhub.io/dashboard
-```
-
-### Install and Run
-
-```bash
-pnpm install
-npx prisma migrate dev --name init
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
----
-
 ## Architecture Notes
 
 ### API Key Security
