@@ -48,7 +48,6 @@ No installation needed — just open the link, create an account (or use Google 
 [![NextAuth.js](https://img.shields.io/badge/NextAuth.js-v5-7C3AED?style=flat-square&logo=auth0&logoColor=white)](https://authjs.dev/)
 [![Finnhub](https://img.shields.io/badge/Finnhub-Stock%20Data-FF6B35?style=flat-square&logo=yahoo&logoColor=white)](https://finnhub.io/)
 [![Recharts](https://img.shields.io/badge/Recharts-Charts-22C55E?style=flat-square&logo=chartdotjs&logoColor=white)](https://recharts.org/)
-[![TanStack Query](https://img.shields.io/badge/TanStack%20Query-v5-FF4154?style=flat-square&logo=reactquery&logoColor=white)](https://tanstack.com/query)
 [![Zod](https://img.shields.io/badge/Zod-Validation-3E67B1?style=flat-square&logo=zod&logoColor=white)](https://zod.dev/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
 
